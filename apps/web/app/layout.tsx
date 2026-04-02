@@ -1,12 +1,14 @@
-import { Geist, Geist_Mono, Figtree, Roboto } from "next/font/google"
-
+import { Geist_Mono, Figtree, Roboto } from "next/font/google"
 import "@workspace/ui/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@workspace/ui/lib/utils";
+import { cn } from "@workspace/ui/lib/utils"
+import { Toaster } from "@workspace/ui/components/sonner"
+import { TooltipProvider } from "@workspace/ui/components/tooltip"
+import { ConvexClientProvider } from "@/components/ConvexClientProvider"
 
-const robotoHeading = Roboto({subsets:['latin'],variable:'--font-heading'});
+const robotoHeading = Roboto({ subsets: ["latin"], variable: "--font-heading" })
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'})
+const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -22,10 +24,23 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", figtree.variable, robotoHeading.variable)}
+      className={cn(
+        "antialiased",
+        fontMono.variable,
+        "font-sans",
+        figtree.variable,
+        robotoHeading.variable
+      )}
     >
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className="h-dvh overflow-hidden relative">
+        <ConvexClientProvider>
+          <TooltipProvider>
+            <ThemeProvider>
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </TooltipProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   )
