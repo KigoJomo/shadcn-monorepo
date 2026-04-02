@@ -1,0 +1,19 @@
+{
+  "name": "@workspace/convex",
+  "private": true,
+  "exports": {
+    "./api": "./api.ts",
+    "./dataModel": "./convex/_generated/dataModel.d.ts"
+  },
+  "scripts": {
+    "dev": "convex dev",
+    "setup": "convex dev --until-success",
+    "typecheck": "tsc --noEmit -p convex"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "convex": "^1.34.1"
+  }
+}
