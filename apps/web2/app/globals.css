@@ -1,0 +1,4 @@
+body {
+  min-height: 100dvh;
+  background: color-mix(in oklab, var(--background) 94%, #f2efe8 6%);
+}
