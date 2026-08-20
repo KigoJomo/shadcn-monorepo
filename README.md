@@ -1,21 +1,49 @@
-# shadcn/ui monorepo template
+# Monorepo Task List
 
-This is a Next.js monorepo template with shadcn/ui.
+A small task app built twice inside one monorepo. Both frontends use the same Convex data and shared shadcn/ui components, which makes the repository useful for testing workspace boundaries instead of pretending a starter template is a product.
 
-## Adding components
+[Open the side-by-side comparison](https://tasks-monorepo.experiments.kigo.ke)
 
-To add components to your app, run the following command at the root of your `web` app:
+## Apps and packages
+
+| Path | Purpose |
+| --- | --- |
+| `apps/web` | First task-list interface |
+| `apps/web2` | Second interface over the same task data |
+| `apps/overview` | Displays both deployed apps side by side |
+| `packages/backend` | Convex schema and task functions |
+| `packages/ui` | Shared shadcn/ui components |
+| `packages/eslint-config` | Shared ESLint rules |
+| `packages/typescript-config` | Shared TypeScript settings |
+
+The two task apps can create, update, complete, and delete the same records. Changes in one appear in the other through Convex subscriptions.
+
+## Run it locally
+
+The workspace uses Bun and Turborepo.
 
 ```bash
-pnpm dlx shadcn@latest add button -c apps/web
+bun install
+bun run --cwd packages/backend setup
+bun run dev
 ```
 
-This will place the ui components in the `packages/ui/src/components` directory.
+Convex writes `NEXT_PUBLIC_CONVEX_URL` for the apps during setup. The three Next.js apps need separate ports when you run them together.
 
-## Using components
+## Checks
 
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button";
+```bash
+bun run lint
+bun run typecheck
+bun run build
 ```
+
+## Add a shared component
+
+Run the shadcn CLI from the repository root and target one of the web apps.
+
+```bash
+bunx shadcn@latest add button -c apps/web
+```
+
+The component is written to `packages/ui` and imported through `@workspace/ui`.
